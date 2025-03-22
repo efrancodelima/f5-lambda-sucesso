@@ -2,8 +2,8 @@
 
 LAMBDA_NAME="ZipFiles"
 # LAMBDA_ROLE = secret do github
-ZIP_FILE="lambda.zip"
-SRC_FILE="src/lambda.py"
+ZIP_FILE="lambda_function.zip"
+SRC_FILE="src/lambda_function.py"
 
 echo "Script iniciado."
 
