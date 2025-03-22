@@ -27,7 +27,7 @@ if [ -z "$EXISTS" ]; then
         --function-name $LAMBDA_NAME \
         --runtime python3.9 \
         --role $LAMBDA_ROLE \
-        --handler lambda.handler \
+        --handler lambda.lambda_handler \
         --zip-file fileb://$ZIP_FILE \
         >/dev/null 2>&1
 
