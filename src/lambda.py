@@ -5,7 +5,7 @@ import os
 import zipfile
 from io import BytesIO
 
-def lambda_handler(event, context):
+def handler(event, context):
     # Bucket name
     bucket_name = "main-357"
     
