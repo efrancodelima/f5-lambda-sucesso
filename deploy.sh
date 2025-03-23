@@ -4,6 +4,7 @@ LAMBDA_NAME="lambda-sucesso"
 # LAMBDA_ROLE = secret do github
 ZIP_FILE="lambda_function.zip"
 SRC_FILE="src/lambda_function.py"
+TIMEOUT="10" # em segundos
 
 echo "Script iniciado."
 
@@ -25,10 +26,11 @@ if [ -z "$EXISTS" ]; then
     echo "Criando nova função Lambda..."
     aws lambda create-function \
         --function-name $LAMBDA_NAME \
-        --runtime python3.9 \
+        --runtime python3.13 \
         --role $LAMBDA_ROLE \
         --handler lambda.lambda_handler \
         --zip-file fileb://$ZIP_FILE \
+        --timeout $TIMEOUT \
         >/dev/null 2>&1
 
     echo "Função Lambda criada com sucesso!"
