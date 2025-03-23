@@ -1,12 +1,12 @@
 #!/bin/bash
 
+echo "Script iniciado."
+
+# Define as variáveis
 LAMBDA_NAME="lambda-sucesso"
 # LAMBDA_ROLE = secret do github
 ZIP_FILE="lambda_function.zip"
 SRC_FILE="src/lambda_function.py"
-TIMEOUT="10" # em segundos
-
-echo "Script iniciado."
 
 # Verifica se o AWS CLI está configurado
 if ! aws sts get-caller-identity &> /dev/null; then
@@ -18,33 +18,16 @@ fi
 echo "Empacotando código fonte..."
 zip -j $ZIP_FILE $SRC_FILE
 
-# Verifica se a Lambda já existe
-EXISTS=$(aws lambda get-function --function-name $LAMBDA_NAME 2>/dev/null)
+# Atualiza a lambda (faz deploy também)
+echo "Enviando o código para a AWS..."
+aws lambda update-function-code \
+    --function-name $LAMBDA_NAME \
+    --zip-file fileb://$ZIP_FILE \
+    >/dev/null 2>&1
 
-if [ -z "$EXISTS" ]; then
-    # Cria a lambda caso não exista
-    echo "Criando nova função Lambda..."
-    aws lambda create-function \
-        --function-name $LAMBDA_NAME \
-        --runtime python3.13 \
-        --role $LAMBDA_ROLE \
-        --handler lambda.lambda_handler \
-        --zip-file fileb://$ZIP_FILE \
-        --timeout $TIMEOUT \
-        >/dev/null 2>&1
-
-    echo "Função Lambda criada com sucesso!"
-else
-    # Atualiza a lambda existente
-    echo "Atualizando código da função Lambda..."
-    aws lambda update-function-code \
-        --function-name $LAMBDA_NAME \
-        --zip-file fileb://$ZIP_FILE \
-        >/dev/null 2>&1
-
-    echo "Lambda atualizada com sucesso!"
-fi
+echo "Deploy realizado com sucesso!"
 
 # Apaga o arquivo zip
 rm $ZIP_FILE
+
 echo "Script finalizado."
