@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LAMBDA_NAME="lambda-falha"
+LAMBDA_NAME="lambda-sucesso"
 # LAMBDA_ROLE = secret do github
 ZIP_FILE="lambda_function.zip"
 SRC_FILE="src/lambda_function.py"
