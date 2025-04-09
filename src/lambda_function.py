@@ -85,7 +85,7 @@ def lambda_handler(event, context):
 
     # Informa o microsserviço que o arquivo zip foi gerado
     print("Enviando notificação ao servidor sobre a conclusão do job...")
-    service_url = "http://44.204.140.237:8080/video/sucesso"
+    service_url = "http://35.170.50.15:8080/video/sucesso"
     data = {
         "jobId": job_id,
         "filePath": zip_key
